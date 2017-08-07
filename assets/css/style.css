@@ -1,0 +1,14 @@
+body {
+	background-image: url(../images/background.gif);
+}
+
+.charBtn {
+	opacity: 0.85;
+	filter: alpha(opacity=85);
+}
+
+.charBtn:hover {
+	opacity: 1.0;
+	filter: alpha(opacity=100);
+}
+
