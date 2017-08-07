@@ -8,7 +8,7 @@ $(document).ready(function() {
 // ......................................................
   var mario = {
     name: "Mario",
-    image: "<img>",
+    image: "assets/images/mario.jpg",
     health: 100,
     powerFactor: 2,
     powerLevel: 10,
@@ -21,7 +21,7 @@ $(document).ready(function() {
 
   var luigi = {
     name: "Luigi",
-    image: "<img>",
+    image: "assets/images/luigi.png",
     health: 100,
     powerFactor: 2,
     powerLevel: 10,
@@ -34,7 +34,7 @@ $(document).ready(function() {
 
   var wario = {
     name: "Wario",
-    image: "<img>",
+    image: "assets/images/wario.jpg",
     health: 100,
     powerFactor: 2,
     powerLevel: 10,
@@ -47,7 +47,7 @@ $(document).ready(function() {
 
   var bowser = {
     name: "Bowser",
-    image: "<img>",
+    image: "assets/images/bowser.png",
     health: 100,
     powerFactor: 2,
     powerLevel: 10,
@@ -72,57 +72,72 @@ $(document).ready(function() {
 
 // put the objects into the DOM/html make this into a function
   for (var i= 0; i < charArray.length; i++) {
-    var charBtn = $("<button>");
+    var charBtn = $("<img>");
     //$(".character").text
     $(charBtn).attr("id", i);
-    $(charBtn).addClass("btn btn-primary charBtn");
+    $(charBtn).addClass("charBtn");
+    $(charBtn).attr("src", charArray[i].image);
     $(charBtn).attr("value", charArray[i].name);
+    $(charBtn).attr("style", "width:125px; height:125px");
     $(charBtn).text(charArray[i].name);
     $(".characters").append(charBtn);
   }
 
-// ..........................................................
-// on click for each character
-  $(".charBtn").on("click", function() { 
-// the user selects a character for himself
-// the character icon goes to new panel
-    var battleChar = $("<button>");
-    var currentId = $(this).attr("id");
+  // ..........................................................
+  console.log("outside player count ", playerCount);
 
-    $(battleChar).attr("id", currentId);
-    $(battleChar).addClass("btn btn-primary charBtn");
-    $(battleChar).text($(this).attr("value"));
-    $(".battle").append(battleChar); 
+  
+   // on click for each character
+    $(".charBtn").on("click", function() { 
+      if (playerCount < 2) {
+        // the user selects a character for himself
+        // the character icon goes to new panel
+        var battleChar = $("<img>");
+        var currentId = $(this).attr("id");
 
-    console.log("currentId ", currentId);
+        $(battleChar).attr("id", currentId);
+        $(battleChar).addClass("charBtn");
+        $(battleChar).attr("src", charArray[currentId].image);
+        $(battleChar).text($(this).attr("value"));
+        $(battleChar).attr("style", "width:125px; height:125px");
+        $(".battle").append(battleChar); 
 
-    playerCount += 1;
+        console.log("currentId ", currentId);
 
-    console.log("playerCount ", playerCount);
-    console.log("userChar ", userChar);
-    console.log("userOpponent", userOpponent);
-  });
+        playerCount += 1;
 
-    if (playerCount == 1) {
-    userChar = currentId;
-    idDiv = "#" + currentId;
-    $("idDiv").css("visability", "hidden").is("hidden");
-    }
-    
-    else if (playerCount ==2) {
-      userOpponent = currentId;
-    }
-    //only if playerCount , 2
-    // if (playerCount < 2) {
-    //   userChar = currentId;
-    //   if (userChar == 0) {
+        if (playerCount == 1) {
+          $(this).css("visibility", "hidden");
+          console.log($(this).css("visibility", "hidden"));
+        }
+        
+        else if (playerCount ==2) {
+          $(this).css("visibility", "hidden");
+          $(".characters").fadeTo("slow", 0.5);        
+        }
+      }
 
-    //   }
-    // }
-//if I have 1 player chosed hide that id if i have more then 1 player chosen then change the visability/opacity on the container of ids
-//hidden this.css hidden or visable
+      console.log("playerCount ", playerCount);
+      console.log("userChar ", userChar);
+      console.log("userOpponent ", userOpponent);
+    });
+  
+    //on click for fightBtn html button on click it fights
+    // var fightBtn = $("<button>");
+    // $(fightBtn).attr("id", fightBtn);
+    // $(fightBtn).addClass("btn btn-primary fightBtn");
+    // $(fightBtn).attr("value", fight);
+    // $(fightBtn).text("Fight!");
+    // $(".battle").append(fightBtn);
 
-  //set mario to userpick, then remove mario in panel
+    $(".fightBtn").on("click", function() {
+      if (playerCount == 2);
+        $(".fightBtn").css("visibility", "hidden");
+
+        //creat fight button\
+        //
+    });
+
   //first pick is userChar, seond pick is userOpponent if panel has char and opponent then play. if opponent health < 0 then pick new oppnenet
   // if ($(".battle"))
   // userChar = bowser
