@@ -24,7 +24,7 @@ $(document).ready(function() {
     name: "Mario",
     image: "assets/images/mario2.png",
     health: 100,
-    powerFactor: 1.5,
+    powerFactor: 1.8,
     powerLevel: 15,
 
     attack : function() {
@@ -50,8 +50,8 @@ $(document).ready(function() {
     name: "Wario",
     image: "assets/images/wario2.png",
     health: 100,
-    powerFactor: 2,
-    powerLevel: 12,
+    powerFactor: 1.2,
+    powerLevel: 17,
 
     attack : function() {
       this.powerLevel = powerLevel * powerFactor;
@@ -63,8 +63,8 @@ $(document).ready(function() {
     name: "Bowser",
     image: "assets/images/bowser2.png",
     health: 100,
-    powerFactor: 2.5,
-    powerLevel: 50,
+    powerFactor: 1.4,
+    powerLevel: 20,
 
     attack : function() {
       this.powerLevel = powerLevel * powerFactor;
@@ -189,15 +189,16 @@ $(document).ready(function() {
             playerCount = 1; //now you can pick a new opponent
             $("#fightBtn").css("visibility", "hidden");
             $(deadOpponent).css("visibility", "hidden");
-
-            //alert("Choose your next opponent!")      
+            alert("Choose your next opponent!")      
 
           }
 
           if (charArray[userChar].health <= 0) {
             console.log("player 1 lost")
             $("#fightBtn").css("visibility", "hidden");
-            //alert("You lost")
+            alert("You lost")
+            confirm("Would you like to play again?");
+            //reset game
           }
 
           //console.log("healthChar", userCharHealth);
@@ -210,29 +211,11 @@ $(document).ready(function() {
     });
   
 
-    // $("#fightBtn").on("click", function() {
-
-    //     hit attck 
-    //     wario.health - mariopowerlevel;
-    //     mariohealth - wario powerlevel;
-    //     mariopowerlevel * powerFactor;
-
     // });
 
-  //first pick is userChar, seond pick is userOpponent if panel has char and opponent then play. if opponent health < 0 then pick new oppnenet
-  // if ($(".battle"))
-  // userChar = bowser
-  // remove bowser from 
-// the user selects an opponent
-
-// the new opponent icon goes to new panel 
 // ..........................................................
 
-// then promt user to continue defeating all opponenets 
-
 // when all opponenets are defeated you win.
-
-// ask if they want to play again and restrat the whole game
 
 // Bonus: add in mario video intro
 

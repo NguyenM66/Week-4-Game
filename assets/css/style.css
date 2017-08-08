@@ -2,6 +2,11 @@ body {
 	background-image: url(../images/background.gif);
 }
 
+.title {
+	font-family: 'Press Start 2P', cursive;
+	color:white;
+	font-size: 25px
+}
 .charBtn {
 	opacity: 1.0;
 	filter: alpha(opacity=1.0);
