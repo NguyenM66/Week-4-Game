@@ -1,7 +1,5 @@
 // objects: Mario, Luigi, Wario, Bowser
-
 // Keys: Name, image, power level
-
 // Methods: attack: increase power by unique factor for each character
 // Make into outter funtion: defense power level remains the same,
 $(document).ready(function() { 
@@ -63,8 +61,8 @@ $(document).ready(function() {
     name: "Bowser",
     image: "assets/images/bowser2.png",
     health: 100,
-    powerFactor: 1.4,
-    powerLevel: 20,
+    powerFactor: 1.15,
+    powerLevel: 18,
 
     attack : function() {
       this.powerLevel = powerLevel * powerFactor;
@@ -72,12 +70,14 @@ $(document).ready(function() {
     },
   }
 
-  function defense() {
-    //userchar.powerLevel = userchar.powerLevel - opponenet.powerlevel
-  }
+  // function defense() {
+  // userchar.powerLevel = userchar.powerLevel - opponenet.powerlevel
+  // }
+
   var playerCount = 0;
 // make array with character objects and itterate through the array
   var charArray = [mario, luigi, wario, bowser];
+  var deadCharArray = [];
   //console.log(charArray);
 
   var userChar;
@@ -112,7 +112,7 @@ $(document).ready(function() {
       if (playerCount < 2) {
         // the user selects a character for himself
         // the character icon goes to new panel
-        
+        // same for opponent
         var currentId = $(this).attr("id");
         deadOpponent = "." + currentId;
 
@@ -137,24 +137,23 @@ $(document).ready(function() {
         $(battleChar).attr("src", charArray[currentId].image);
         $(battleChar).text($(this).attr("value"));
         $(battleChar).attr("style", "width:15%; height:auto");
-        $(".battle").append(battleChar); 
+        $(".battle-row").append(battleChar); 
 
         //console.log("currentId ", currentId);
-
-        
 
         if (playerCount == 0) {
           userChar = currentId;
           //console.log("userChar ", userChar);
           $(this).css("visibility", "hidden");
-          $(".progress-bar").attr("style", "width:" + charArray[userChar].health + "%");
-          $(".progress-bar").text( charArray[userChar].health + "%");
+          
         }
         
         else if (playerCount ==1) {
           userOpponent = currentId;
           //console.log("userOpponent ", userOpponent);
           $(this).css("visibility", "hidden");
+          $(".progress-bar").attr("style", "width:" + charArray[userChar].health + "%");
+          $(".progress-bar").text( charArray[userChar].health + "%");
           $(".progress-bar").attr("style", "width:" + userOpponentHealth + "%");
           $(".progress-bar").text( userOpponentHealth + "%");
           $("#fightBtn").css("visibility", "visible");
@@ -182,6 +181,14 @@ $(document).ready(function() {
           $(".userOpponent").text( charArray[userOpponent].health + "%");
           //console.log("user health ", userOpponentHealth);
 
+          if (charArray[userChar].health <= 0) {
+            console.log("player 1 lost")
+            $("#fightBtn").css("visibility", "hidden");
+            //alert("You lost")
+            //confirm("Would you like to play again?");
+            //reset game
+          }
+
           if (charArray[userOpponent].health <= 0) {
             console.log("player 1 won")
             console.log("deadOpponent: ", deadOpponent)
@@ -189,16 +196,8 @@ $(document).ready(function() {
             playerCount = 1; //now you can pick a new opponent
             $("#fightBtn").css("visibility", "hidden");
             $(deadOpponent).css("visibility", "hidden");
-            alert("Choose your next opponent!")      
+            //alert("Choose your next opponent!")      
 
-          }
-
-          if (charArray[userChar].health <= 0) {
-            console.log("player 1 lost")
-            $("#fightBtn").css("visibility", "hidden");
-            alert("You lost")
-            confirm("Would you like to play again?");
-            //reset game
           }
 
           //console.log("healthChar", userCharHealth);
