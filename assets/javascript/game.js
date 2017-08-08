@@ -5,11 +5,24 @@
 // Methods: attack: increase power by unique factor for each character
 // Make into outter funtion: defense power level remains the same,
 $(document).ready(function() { 
+  // Gets Link for Theme Song
+  var audioElement = document.createElement("audio");
+  audioElement.setAttribute("src", "assets/images/castle1.mp3");
+  audioElement.loop = true;
+  audioElement.play();
+  // Theme Button
+  $(".theme-button").on("click", function() {
+    audioElement.loop = true;
+    audioElement.play();
+  });
+  $(".pause-button").on("click", function() {
+    audioElement.pause();
+  });
 
 // ......................................................
   var mario = {
     name: "Mario",
-    image: "assets/images/mario.jpg",
+    image: "assets/images/mario2.png",
     health: 100,
     powerFactor: 1.5,
     powerLevel: 15,
@@ -22,7 +35,7 @@ $(document).ready(function() {
 
   var luigi = {
     name: "Luigi",
-    image: "assets/images/luigi.png",
+    image: "assets/images/luigi2.png",
     health: 100,
     powerFactor: 1.75,
     powerLevel: 10,
@@ -35,7 +48,7 @@ $(document).ready(function() {
 
   var wario = {
     name: "Wario",
-    image: "assets/images/wario.jpg",
+    image: "assets/images/wario2.png",
     health: 100,
     powerFactor: 2,
     powerLevel: 12,
@@ -48,10 +61,10 @@ $(document).ready(function() {
 
   var bowser = {
     name: "Bowser",
-    image: "assets/images/bowser.png",
+    image: "assets/images/bowser2.png",
     health: 100,
     powerFactor: 2.5,
-    powerLevel: 20,
+    powerLevel: 50,
 
     attack : function() {
       this.powerLevel = powerLevel * powerFactor;
@@ -59,35 +72,33 @@ $(document).ready(function() {
     },
   }
 
-  var playerCount = 0;
-  var userChar = 0;
-  var userOpponent = 0;
-
-
   function defense() {
     //userchar.powerLevel = userchar.powerLevel - opponenet.powerlevel
   }
-
+  var playerCount = 0;
 // make array with character objects and itterate through the array
   var charArray = [mario, luigi, wario, bowser];
-  console.log(charArray);
-  var userCharHealth = charArray[userChar].health;
-  var userOpponentHealth = charArray[userOpponent].health;
-  var userCharPL = charArray[userChar].powerLevel;
-  var userOpponentPL = charArray[userOpponent].powerLevel;
-  var userCharPF = charArray[userChar].powerFactor;
-  var userOpponentPF = charArray[userOpponent].powerFactor;
+  //console.log(charArray);
 
+  var userChar;
+  var userOpponent;
+  var userCharHealth;
+  var userOpponentHealth;
+  var userCharPL;
+  var userOpponentPL;
+  var userCharPF;
+  var userOpponentPF;
+  var deadOpponent;
 
 // put the objects into the DOM/html make this into a function
   for (var i= 0; i < charArray.length; i++) {
     var charBtn = $("<img>");
     //$(".character").text
     $(charBtn).attr("id", i);
-    $(charBtn).addClass("charBtn img-circle");
+    $(charBtn).addClass("charBtn img-rounded");
     $(charBtn).attr("src", charArray[i].image);
     $(charBtn).attr("value", charArray[i].name);
-    $(charBtn).attr("style", "width:125px; height:125px");
+    $(charBtn).attr("style", "width:15%; height:auto");
     $(charBtn).text(charArray[i].name);
     $(".characters").append(charBtn);
   }
@@ -101,59 +112,81 @@ $(document).ready(function() {
       if (playerCount < 2) {
         // the user selects a character for himself
         // the character icon goes to new panel
-        var battleChar = $("<img>");
+        
         var currentId = $(this).attr("id");
-        var deadOpponent = "." + currentId;
+        deadOpponent = "." + currentId;
 
+        if(playerCount == 0){
+          userChar = currentId;
+          userCharHealth = charArray[userChar].health;
+          userCharPL = charArray[userChar].powerLevel;
+          userCharPF = charArray[userChar].powerFactor;
+        }
+
+        if(playerCount == 1){
+          userOpponent = currentId;
+          userOpponentHealth = charArray[userOpponent].health;
+          userOpponentPL = charArray[userOpponent].powerLevel;
+          userOpponentPF = charArray[userOpponent].powerFactor;
+        }
+
+        var battleChar = $("<img>");
         $(battleChar).attr("id", currentId);
-        $(battleChar).addClass("charBtn img-circle");
+        $(battleChar).addClass("charBtn img-rounded");  
         $(battleChar).addClass(currentId);
         $(battleChar).attr("src", charArray[currentId].image);
         $(battleChar).text($(this).attr("value"));
-        $(battleChar).attr("style", "width:125px; height:125px");
+        $(battleChar).attr("style", "width:15%; height:auto");
         $(".battle").append(battleChar); 
 
-        console.log("currentId ", currentId);
+        //console.log("currentId ", currentId);
 
-        playerCount += 1;
+        
 
-        if (playerCount == 1) {
+        if (playerCount == 0) {
           userChar = currentId;
-          console.log("userChar ", userChar);
+          //console.log("userChar ", userChar);
           $(this).css("visibility", "hidden");
-          $(".progress-bar").attr("style", "width:" + userCharHealth + "%");
-          $(".progress-bar").text( userCharHealth + "%");
+          $(".progress-bar").attr("style", "width:" + charArray[userChar].health + "%");
+          $(".progress-bar").text( charArray[userChar].health + "%");
         }
         
-        else if (playerCount ==2) {
+        else if (playerCount ==1) {
           userOpponent = currentId;
-          console.log("userOpponent ", userOpponent);
+          //console.log("userOpponent ", userOpponent);
           $(this).css("visibility", "hidden");
           $(".progress-bar").attr("style", "width:" + userOpponentHealth + "%");
           $(".progress-bar").text( userOpponentHealth + "%");
           $("#fightBtn").css("visibility", "visible");
           $(".characters").fadeTo("slow", 0.5);  
         }
+        playerCount += 1;
       }
 
-      console.log("playerCount ", playerCount);
-      console.log("deadOpponent", deadOpponent);
+      //console.log("playerCount ", playerCount);
+      //console.log("deadOpponent", deadOpponent);
 
       if (playerCount ==2) {
         $("#fightBtn").on("click", function() {
           console.log("hit");
 
-          userCharHealth -= userOpponentPL;
-          $(".userChar").attr("style", "width:" + userCharHealth + "%");
-          $(".userChar").text( userCharHealth + "%");
+          charArray[userChar].health -= userOpponentPL;
+          //charArray[userChar].attack.call(charArray[userOpponent], userOpponentPL);
+          $(".userChar").attr("style", "width:" + charArray[userChar].health + "%");
+          $(".userChar").text( charArray[userChar].health + "%");
+          //console.log("user health ", userCharHealth);
+          //console.log(userChar, userOpponent);
 
-          userOpponentHealth -= userCharPL * userCharPF;
-          $(".userOpponent").attr("style", "width:" + userOpponentHealth + "%");
-          $(".userOpponent").text( userOpponentHealth + "%");
+          charArray[userOpponent].health -= (userCharPL * userCharPF);
+          $(".userOpponent").attr("style", "width:" + charArray[userOpponent].health + "%");
+          $(".userOpponent").text( charArray[userOpponent].health + "%");
+          //console.log("user health ", userOpponentHealth);
 
-          if (userOpponentHealth <= 0) {
+          if (charArray[userOpponent].health <= 0) {
+            console.log("player 1 won")
+            console.log("deadOpponent: ", deadOpponent)
+
             playerCount = 1; //now you can pick a new opponent
-            // $("#2").css("visibility", "hidden");
             $("#fightBtn").css("visibility", "hidden");
             $(deadOpponent).css("visibility", "hidden");
 
@@ -161,13 +194,14 @@ $(document).ready(function() {
 
           }
 
-          if (userCharHealth <= 0) {
+          if (charArray[userChar].health <= 0) {
+            console.log("player 1 lost")
             $("#fightBtn").css("visibility", "hidden");
             //alert("You lost")
           }
 
-          console.log("healthChar", userCharHealth);
-          console.log("healthOpp", userOpponentHealth);
+          //console.log("healthChar", userCharHealth);
+          //console.log("healthOpp", userOpponentHealth);
         });
       }
       // if (charArray.length == -1) {
@@ -201,16 +235,5 @@ $(document).ready(function() {
 // ask if they want to play again and restrat the whole game
 
 // Bonus: add in mario video intro
-  // Gets Link for Theme Song
-  var audioElement = document.createElement("audio");
-  audioElement.setAttribute("src", "assets/images/castle1.mp3");
-  // Theme Button
-  $(".theme-button").on("click", function() {
-    audioElement.loop = true;
-    audioElement.play();
-  });
-  $(".pause-button").on("click", function() {
-    audioElement.pause();
-  });
 
 });
