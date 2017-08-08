@@ -22,8 +22,8 @@ $(document).ready(function() {
     name: "Mario",
     image: "assets/images/mario2.png",
     health: 100,
-    powerFactor: 1.8,
-    powerLevel: 15,
+    powerFactor: 2,
+    powerLevel: 9,
 
     attack : function() {
       this.powerLevel = powerLevel * powerFactor;
@@ -35,7 +35,7 @@ $(document).ready(function() {
     name: "Luigi",
     image: "assets/images/luigi2.png",
     health: 100,
-    powerFactor: 1.75,
+    powerFactor: 1.5,
     powerLevel: 10,
 
     attack : function() {
@@ -49,7 +49,7 @@ $(document).ready(function() {
     image: "assets/images/wario2.png",
     health: 100,
     powerFactor: 1.2,
-    powerLevel: 17,
+    powerLevel: 6,
 
     attack : function() {
       this.powerLevel = powerLevel * powerFactor;
@@ -61,8 +61,8 @@ $(document).ready(function() {
     name: "Bowser",
     image: "assets/images/bowser2.png",
     health: 100,
-    powerFactor: 1.15,
-    powerLevel: 18,
+    powerFactor: 1.1,
+    powerLevel: 20,
 
     attack : function() {
       this.powerLevel = powerLevel * powerFactor;
@@ -138,7 +138,6 @@ $(document).ready(function() {
         $(battleChar).text($(this).attr("value"));
         $(battleChar).attr("style", "width:15%; height:auto");
         $(".battle-row").append(battleChar); 
-
         //console.log("currentId ", currentId);
 
         if (playerCount == 0) {
@@ -152,10 +151,10 @@ $(document).ready(function() {
           userOpponent = currentId;
           //console.log("userOpponent ", userOpponent);
           $(this).css("visibility", "hidden");
-          $(".progress-bar").attr("style", "width:" + charArray[userChar].health + "%");
-          $(".progress-bar").text( charArray[userChar].health + "%");
-          $(".progress-bar").attr("style", "width:" + userOpponentHealth + "%");
-          $(".progress-bar").text( userOpponentHealth + "%");
+          $(".userChar").attr("style", "width:" + charArray[userChar].health + "%");
+          $(".userChar").text( charArray[userChar].health + "%");
+          $(".userOpponent").attr("style", "width:" + userOpponentHealth + "%");
+          $(".userOpponent").text( userOpponentHealth + "%");
           $("#fightBtn").css("visibility", "visible");
           $(".characters").fadeTo("slow", 0.5);  
         }
